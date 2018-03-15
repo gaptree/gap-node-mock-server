@@ -3,7 +3,7 @@
 ## install
 
 #### a. yarn add gap-node-mock-server --save-dev
-#### b. add script to package.json
+#### b. add script to package.json (replace app by your script name)
 ``` javascript
 "scripts": {
     "mock": "pm2 start app.js --watch",
