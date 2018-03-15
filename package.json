@@ -1,6 +1,6 @@
 {
   "name": "gap-node-mock-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "author": "kiddshao@gmail.com",
   "license": "MIT",
