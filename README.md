@@ -6,8 +6,8 @@
 #### b. add script to package.json
 ``` javascript
 "scripts": {
-    "mock": "./node_modules/pm2/bin/pm2 start app.js --watch",
-    "stopMock": "./node_modules/pm2/bin/pm2 sop app.js"
+    "mock": "pm2 start app.js --watch",
+    "stopMock": "pm2 stop app.js"
   }
 ```
 ## require
