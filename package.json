@@ -2,7 +2,7 @@
   "name": "gap-node-mock-server",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "1162882012@qq.com",
+  "author": "kiddshao@gmail.com",
   "license": "MIT",
   "dependencies": {
     "dev-ip": "^1.0.1",
@@ -10,11 +10,8 @@
     "koa": "^2.5.0",
     "koa-mount": "^3.0.0",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.5",
     "lodash": "^4.17.5",
     "pm2": "^2.10.1"
-  },
-  "scripts": {
-    "mock": "./node_modules/pm2/bin/pm2 start app.js --watch",
-    "stopMock": "./node_modules/pm2/bin/pm2 sop app.js"
   }
 }

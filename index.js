@@ -10,12 +10,23 @@ const klawSync = require('klaw-sync');
 const mount = require('koa-mount');
 const Router = require('koa-router');
 const path = require('path');
+const cors = require('koa2-cors');
 const _ = require('lodash');
 
 module.exports = (opts) => {
     const baseDir = opts.baseDir || process.cwd();
     const port = opts.port || 8383;
     const app = new koa();
+
+	app.use(cors({
+		origin: ctx =>  ctx.request.header.origin,
+		exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+		maxAge: 5,
+		credentials: true,
+		allowMethods: ['GET', 'POST'],
+		allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+	}));
+
     const methodFlag = ['$get', '$post'];
     
     const routerDir = path.join(baseDir, 'mock/routers');
