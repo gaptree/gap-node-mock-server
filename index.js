@@ -15,7 +15,7 @@ const _ = require('lodash');
 
 module.exports = (opts) => {
     const baseDir = opts.baseDir || process.cwd();
-    const port = opts.port || 8383;
+    const port = opts.port || 3001;
     const app = new koa();
 
 	app.use(cors({
@@ -28,20 +28,20 @@ module.exports = (opts) => {
 	}));
 
     const methodFlag = ['$get', '$post'];
-    
+
     const routerDir = path.join(baseDir, 'mock/routers');
-    
+
     const host = devIp();
-    
+
     let error;
     let mockFiles = [];
-    
+
     const files = klawSync(routerDir, {nodir: true});
-    
+
     const bindRoute = (routerConf, routeKey, rootPath, router) => {
         let handler = routerConf[routeKey];
         routerKey = rootPath + routeKey;
-    
+
         if (_.isFunction(handler)) {
             router.use(routeKey, handler)
         } else if (_.isObject(handler)) {
@@ -66,7 +66,7 @@ module.exports = (opts) => {
             }
         }
     }
-    
+
     const geneRouter = async (confs) => {
         let router = new Router();
         Object.keys(confs).forEach(key => {
@@ -81,11 +81,11 @@ module.exports = (opts) => {
                 })
             }
         })
-    
+
         return router;
     }
-    
-    
+
+
     const destructFile = async (fileArr) => {
         let target = {};
         for (let i = 0; i < fileArr.length; i++) {
@@ -93,7 +93,7 @@ module.exports = (opts) => {
             try {
                 let routeObj = await require(filePath);
                 if (routeObj.$root) {
-                    target[routeObj.$root] = Object.assign({}, target[routeObj.$root], routeObj);  
+                    target[routeObj.$root] = Object.assign({}, target[routeObj.$root], routeObj);
                     delete target[routeObj.$root].$root;
                 } else {
                     //自定义 '/' 根路由
@@ -103,25 +103,25 @@ module.exports = (opts) => {
                 console.log(error);
             }
         }
-    
+
         return target;
     }
-    
+
     const kog = async () => {
         let data = await destructFile(files);
         let r = await geneRouter(data);
-    
+
         r.get('/test', async ctx=> {
             ctx.body = 'testtest';
         })
-    
+
         app.use(mount('/', r.middleware()));
     }
-    
+
     kog();
-    
-    app.listen(3001, function () {
+
+    app.listen(port, function () {
         console.log('mock server start  (￣_,￣ )');
-        console.log('listening at http://' + host + ':' + 3001);
-    })    
+        console.log('listening at http://' + host + ':' + port);
+    })
 }
