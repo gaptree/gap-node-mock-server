@@ -40,7 +40,7 @@ module.exports = (opts) => {
 
     const bindRoute = (routerConf, routeKey, rootPath, router) => {
         let handler = routerConf[routeKey];
-        routerKey = rootPath + routeKey;
+        routeKey = rootPath + routeKey;
 
         if (_.isFunction(handler)) {
             router.use(routeKey, handler)
